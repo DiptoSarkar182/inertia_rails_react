@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 
 export default function Layout({ children }) {
     return (
@@ -39,18 +40,21 @@ export default function Layout({ children }) {
 
                         {/* Auth buttons */}
                         <div className="flex items-center space-x-4">
-                            <Link
-                                href="/login"
-                                className="px-4 py-2 text-sm font-medium text-gray-900 hover:text-gray-700"
-                            >
-                                Log in
-                            </Link>
-                            <Link
-                                href="/signup"
-                                className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Sign up
-                            </Link>
+                            <SignedOut>
+                                <SignInButton>
+                                    <button className="px-4 py-2 text-sm font-medium text-gray-900 hover:text-gray-700">
+                                        Log in
+                                    </button>
+                                </SignInButton>
+                                <SignUpButton>
+                                    <button className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Sign up
+                                    </button>
+                                </SignUpButton>
+                            </SignedOut>
+                            <SignedIn>
+                                <UserButton />
+                            </SignedIn>
                         </div>
                     </div>
                 </div>

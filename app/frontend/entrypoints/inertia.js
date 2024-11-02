@@ -1,7 +1,15 @@
 import { createInertiaApp } from '@inertiajs/react'
 import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import Layout from "~/pages/layout/Layout.jsx";
+import { ClerkProvider } from '@clerk/clerk-react'
+import Layout from "~/pages/layout/Layout.jsx"
+
+// Import your publishable key
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
 
 createInertiaApp({
   // Set default page title
@@ -29,6 +37,12 @@ createInertiaApp({
   setup({ el, App, props }) {
     const root = createRoot(el)
 
-    root.render(createElement(App, props))
+    root.render(
+        createElement(
+            ClerkProvider,
+            { publishableKey: PUBLISHABLE_KEY, afterSignOutUrl: "/" },
+            createElement(App, props)
+        )
+    )
   },
 })
